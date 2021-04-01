@@ -1,29 +1,87 @@
-# Fullstack boilerplate
+# My maps
 
-## Getting Started
+# Views
+| url               | page displayed
+-------------------------------------------------
+| /                 | Home view, shows all pins
+| /filter           | Home view with filtered pins
+| /description/:id  | Shows description of one pin
+| /favourites       | Shows a list of favourites
+| /login            | Login page
+| /register         | Register page
 
-### From the Github UI
-See the instructions [here](https://docs.github.com/en/free-pro-team@latest/github/creating-cloning-and-archiving-repositories/creating-a-repository-from-a-template) to use Github's feature to create a new repo from a template.
+## API endpoints
+#### Get all trails
+**_GET_** /trails
 
-### From the command line
-
+Response Body:
+```js
+ [{
+     trailId: 1,
+     name: "Kaukau",
+     description: "A big hill",
+     length: 5,
+     dogFriendly: true
+ },
+ {
+     trailId: 2,
+     name: "Colonial knob",
+     description: "A bigger? hill",
+     length: 12,
+     dogFriendly: false
+ }]
 ```
-git clone https://github.com/dev-academy-challenges/boilerplate-fullstack [your-project-name]
-cd [your-project-name]
-npm install # to install dependencies
-npm run dev # to start the dev server
+
+#### Get a trail by ID
+**_GET_** /trail/:id
+```js
+{
+     trailId: 1,
+     name: "Kaukau",
+     description: "A big hill",
+     length: 5,
+     dogFriendly: false
+ }
+ ```
+
+ #### Get a trail by filter
+**_GET_** /trail?dogFriendly='true'
+
+```js
+{
+     trailId: 1,
+     name: "Kaukau",
+     description: "A big hill",
+     length: 5,
+     dogFriendly: false
+ }
+ ```
+
+#### Get a users favourite trails
+**_GET_** /trail/:id
+```js
+ [{
+     trailId: 1,
+     name: "Kaukau",
+     description: "A big hill",
+     length: 5,
+     dogFriendly: false
+ },
+ {
+     trailId: 2,
+     name: "Colonial knob",
+     description: "A bigger? hill",
+     length: 12,
+     dogFriendly: false
+ }]
 ```
 
-You can find the server running on [http://localhost:3000](http://localhost:3000).
+ #### Delete a trail from user favourites
+**_DELETE_** /trail/:id
+```js
+OK
+ ```
 
-## Details
 
-This repo includes:
-
-* a single, simple API endpoint (`/api/v1/fruits`)
-* a single React component (`<App />`)
-* an example database module (`server/db/fruits.js`)
-* an API client module (`client/apis/fruits.js`)
-* configuration for Jest and Enzyme (including JSDOM)
-* configuration for server-side debugging in VS Code
-* a single client-side test (`client/components/App.test.js`)
+ ## DB diagrams
+ https://dbdiagram.io/d/6064fa0eecb54e10c33e356d
