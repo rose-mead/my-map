@@ -1,30 +1,24 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
-import { fetchFruits } from '../actions'
+
+import { fetchTrails } from '../actions'
+import Trails from './Trails'
 
 const App = (props) => {
   useEffect(() => {
-    props.dispatch(fetchFruits())
+    props.dispatch(fetchTrails())
   })
 
   return (
     <>
       <div className='app'>
-        <h1>Fullstack Boilerplate - with Fruits!</h1>
-        <ul>
-          {props.fruits.map(fruit => (
-            <li key={fruit}>{fruit}</li>
-          ))}
-        </ul>
+        <h1>My Map</h1>
+       <Trails/>
       </div>
     </>
   )
 }
-const mapStateToProps = (globalState) => {
-  return {
-    fruits: globalState.fruits
-  }
-}
 
-export default connect(mapStateToProps)(App)
+
+export default connect()(App)

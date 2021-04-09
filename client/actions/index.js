@@ -1,19 +1,20 @@
-import { getFruits } from '../apis/fruits'
+import { getTrails } from '../apis/trails'
 
-export const SET_FRUITS = 'SET_FRUITS'
+export const SET_TRAILS = 'SET_TRAILS'
 
-export function setFruits (fruits) {
+export function setTrails (trails) {
   return {
-    type: SET_FRUITS,
-    fruits
+    type: SET_TRAILS,
+    trails
   }
 }
 
-export function fetchFruits () {
+export function fetchTrails () {
   return dispatch => {
-    return getFruits()
-      .then(fruits => {
-        dispatch(setFruits(fruits))
+    return getTrails()
+      .then(trails => {
+        console.log(trails);
+        dispatch(setTrails(trails))
         return null
       })
   }
