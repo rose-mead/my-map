@@ -15,70 +15,82 @@
 **_GET_** /trails
 
 Response Body:
-```js
+```json
  [{
-     trailId: 1,
-     name: "Kaukau",
-     description: "A big hill",
-     length: 5,
-     dogFriendly: true
+     "id": 1,
+     "name": "Kaukau",
+     "description": "A big hill",
+     "length": 5,
+     "dogFriendly": 1,
+     "swimming": 0,
  },
  {
-     trailId: 2,
-     name: "Colonial knob",
-     description: "A bigger? hill",
-     length: 12,
-     dogFriendly: false
+     "id": 2,
+     "name": "Colonial knob",
+     "description": "A bigger? hill",
+     "length": 12,
+     "dogFriendly": 0,
+     "swimming": 0,
  }]
 ```
 
 #### Get a trail by ID
-**_GET_** /trail/:id
-```js
+**_GET_** /trails/:id
+```json
 {
-     trailId: 1,
-     name: "Kaukau",
-     description: "A big hill",
-     length: 5,
-     dogFriendly: false
+     "id": 1,
+     "name": "Kaukau",
+     "description": "A big hill",
+     "length": 5,
+     "dog_friendly": 0,
+     "swimming": 0
  }
  ```
+ #### Get trails by filter
+**_GET_** /trails/query?dogFriendly=true
 
- #### Get a trail by filter
-**_GET_** /trail?dogFriendly='true'
-
-```js
-{
-     trailId: 1,
-     name: "Kaukau",
-     description: "A big hill",
-     length: 5,
-     dogFriendly: false
- }
+```json
+[{
+     "id": 1,
+     "name": "Kaukau",
+     "description": "A big hill",
+     "length": 5,
+     "dogFriendly": 1,
+     "swimming": 0,
+ },
+ {
+     "id": 2,
+     "name": "Colonial knob",
+     "description": "A bigger? hill",
+     "length": 12,
+     "dogFriendly": 0,
+     "swimming": 0,
+ }]
  ```
 
 #### Get a users favourite trails
-**_GET_** /trail/:id
-```js
+**_GET_** /favourite
+```json
  [{
-     trailId: 1,
-     name: "Kaukau",
-     description: "A big hill",
-     length: 5,
-     dogFriendly: false
+     "trailId": 1,
+     "name": "Kaukau",
+     "description": "A big hill",
+     "length": 5,
+     "dogFriendly": 0
  },
  {
-     trailId: 2,
-     name: "Colonial knob",
-     description: "A bigger? hill",
-     length: 12,
-     dogFriendly: false
+     "trailId": 2,
+     "name": "Colonial knob",
+     "description": "A bigger? hill",
+     "length": 12,
+     "dogFriendly": 0
  }]
 ```
 
+
  #### Delete a trail from user favourites
-**_DELETE_** /trail/:id
-```js
+**_DELETE_** /favourite/:id
+```json
 OK
  ```
 

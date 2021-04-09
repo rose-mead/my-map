@@ -2,8 +2,8 @@
 exports.up = function (knex) {
     return knex.schema.createTable('users_trails', table => {
       table.increments('id')
-      table.string('user_id')
-      table.string('trail_id')
+      table.integer('user_id').references('users.id')
+      table.integer('trail_id').references('trails.id')
     })
   }
   
