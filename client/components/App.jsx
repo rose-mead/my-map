@@ -2,12 +2,14 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
 
-import { fetchTrails } from '../actions'
+import { fetchFavourites, fetchTrails } from '../actions'
+import Favourites from './Favourites'
 import Trails from './Trails'
 
 const App = (props) => {
   useEffect(() => {
     props.dispatch(fetchTrails())
+    props.dispatch(fetchFavourites())
   })
 
   return (
@@ -15,6 +17,7 @@ const App = (props) => {
       <div className='app'>
         <h1>My Map</h1>
        <Trails/>
+       <Favourites/>
       </div>
     </>
   )
