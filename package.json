@@ -43,10 +43,13 @@
     ]
   },
   "dependencies": {
+    "dotenv": "^8.2.0",
+    "dotenv-webpack": "^7.0.2",
     "express": "^4.17.1",
     "knex": "^0.21.12",
     "lodash": "^4.17.21",
     "pg": "^8.5.1",
+    "react-map-gl": "^6.1.12",
     "superagent": "^6.1.0"
   },
   "devDependencies": {

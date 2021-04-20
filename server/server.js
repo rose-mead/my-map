@@ -1,5 +1,6 @@
 const express = require('express')
 const path = require('path')
+require('dotenv').config()
 
 const trailRoutes = require('./routes/trails')
 const favouriteRoutes = require('./routes/favourites')

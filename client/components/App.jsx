@@ -1,6 +1,8 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 
+import MyMap from './MyMap'
+
 
 import { fetchFavourites, fetchTrails } from '../actions'
 import Favourites from './Favourites'
@@ -18,6 +20,7 @@ const App = (props) => {
         <h1>My Map</h1>
        <Trails/>
        <Favourites/>
+       <MyMap/>
       </div>
     </>
   )
