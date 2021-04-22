@@ -8,16 +8,16 @@ const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,
 const SIZE = 20;
 
 const location = {
-    latitude: -41.3458,
-    longitude: 174.936858
+    latitude: -41.146366,
+    longitude: 174.818397
 }
 
 
 function Pin ({onClick}) {
     return (
     <Marker
-        latitude={-41.3458}
-        longitude={174.936858}
+        latitude={location.latitude}
+        longitude={location.longitude}
         // offsetLeft={-20}
         // offsetTop={-10}
       >

@@ -4,6 +4,7 @@ import MapGL, {Popup} from "react-map-gl"
 import Pin from "./Pin"
 import PopupInfo from "./PopupInfo"
 
+
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
 function MyMap() {

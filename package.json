@@ -43,6 +43,7 @@
     ]
   },
   "dependencies": {
+    "deck.gl": "^8.4.13",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^7.0.2",
     "express": "^4.17.1",
