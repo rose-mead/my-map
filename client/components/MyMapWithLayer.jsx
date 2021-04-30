@@ -33,13 +33,14 @@ function MyMapWithLayer() {
       },
 
       // getLineColor,
-      // getLineWidth,
+      getLineColor: [0, 255, 255, 200],
+      getLineWidth: 50,
 
       pickable: true,
       // onHover: setHoverInfo,
 
       updateTriggers: {
-        // getLineColor: {year},
+        getLineColor: [255, 255, 0, 200],
         // getLineWidth: {year}
       },
 
@@ -53,7 +54,7 @@ function MyMapWithLayer() {
   const INITIAL_VIEW_STATE = {
     latitude: viewport.latitude,
     longitude: viewport.longitude,
-    zoom: 14,
+    zoom: 12,
     minZoom: 2,
     maxZoom: 8
   };
@@ -64,6 +65,8 @@ function MyMapWithLayer() {
       pickingRadius={5}
       initialViewState={INITIAL_VIEW_STATE}
       controller={true}
+      getTooltip={({object}) => object && (object.properties.name || object.properties.station)} 
+      onClick={() => setPopupInfo('clicked')}
     >
       <MapGL
         {...viewport}
@@ -79,8 +82,8 @@ function MyMapWithLayer() {
           <Popup
             tipSize={5}
             anchor="top"
-            longitude={popupInfo.longitude}
-            latitude={popupInfo.latitude}
+            longitude={viewport.longitude}
+            latitude={viewport.latitude}
             closeOnClick={false}
             onClose={setPopupInfo}
           >
