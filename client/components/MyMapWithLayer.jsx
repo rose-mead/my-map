@@ -1,6 +1,6 @@
 import React from "react"
 import { useState } from "react"
-import MapGL, { Popup } from "react-map-gl"
+import MapGL, { Popup, _MapContext as MapContext } from "react-map-gl"
 import Pin from "./Pin"
 import PopupInfo from "./PopupInfo"
 
@@ -12,7 +12,7 @@ import data from "./data.json"
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
 function MyMapWithLayer() {
-  const [popupInfo, setPopupInfo] = useState({})
+  const [popupInfo, setPopupInfo] = useState(null)
   const [viewport, setViewport] = useState({
     latitude: -41.146366,
     longitude: 174.818397,
@@ -108,7 +108,7 @@ function MyMapWithLayer() {
     maxZoom: 8,
   }
 
-  const renderPopup = ({ hoverInfo }) => {
+  const renderPopup = () => {
    
     return (
       <Popup
@@ -127,7 +127,8 @@ function MyMapWithLayer() {
   }
 
   return (
-    <DeckGL
+    <DeckGL 
+      ContextProvider={MapContext.Provider}
       layers={layers}
       pickingRadius={5}
       initialViewState={INITIAL_VIEW_STATE}
@@ -135,9 +136,14 @@ function MyMapWithLayer() {
       getTooltip={({ object }) =>
         object && (object.properties.name || object.properties.station)
       }
-      onClick={() => setPopupInfo("clicked")}
+      onClick={() => setPopupInfo(true)}
       >
+        {popupInfo && renderPopup()}
+        <Pin onClick={setPopupInfo} />
+
+
       <MapGL
+        key="map"
         {...viewport}
         width="100vw"
         height="100vh"
@@ -145,8 +151,6 @@ function MyMapWithLayer() {
         onViewportChange={setViewport}
         mapboxApiAccessToken={MAPBOX_TOKEN}
         >
-        <Pin onClick={setPopupInfo} />
-        {/* {popupInfo && renderPopup(hoverInfo)} */}
 
       </MapGL>
     </DeckGL>
