@@ -12,7 +12,7 @@ import data from "./data.json"
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
 function MyMapWithLayer() {
-  const [popupInfo, setPopupInfo] = useState(null)
+  const [popupInfo, setPopupInfo] = useState({})
   const [viewport, setViewport] = useState({
     latitude: -41.146366,
     longitude: 174.818397,
@@ -20,6 +20,58 @@ function MyMapWithLayer() {
     bearing: 0,
     pitch: 0,
   })
+
+  const [lineStyling, setLineStyling] = useState({
+    lineColor: [0, 255, 255, 200],
+    lineWidth: 50
+  })
+
+  // const [lineThickness, setLineThickness] = useState(50)
+  // const [lineColour, setLineColour] = useState([0, 255, 255, 200])
+  const [hoverInfo, setHoverInfo] = useState(false)
+
+  const toggleLineStyle = (width) => {
+    if(lineStyling.lineWidth == width) {
+      return null
+    } else if (lineStyling.lineWidth == 50){
+      console.log('setting width')
+      setLineStyling({
+        lineColor: [0, 0, 255, 200],
+        lineWidth: 100
+      })
+    } else {
+        setLineStyling({
+          lineColor: [0, 255, 255, 200],
+          lineWidth: 50
+        })
+      }
+  }
+
+
+  const handleHover = (evt) => {
+    const { object } = evt
+
+    // if exiting toggle, make linethickness 50
+    // if entering hover, make linethickness 100
+    // if during hover, don't change thickness
+
+    if(!object) {
+      toggleLineStyle(50)
+      console.log('exited hover')
+    } else {
+      toggleLineStyle(100)
+    }
+    setHoverInfo('info')
+    // if entering hover, thicken the line, else make it thin
+    // how to do this using only the onHover event handler
+    // if(!isHovering){
+    //   setIsHovering(true)
+    //   console.log('hovering')
+    //   // setLineThickness(100)
+    // } else {
+    //   return null
+    // }
+  }
 
   const layers = [
     new GeoJsonLayer({
@@ -31,14 +83,11 @@ function MyMapWithLayer() {
       parameters: {
         depthTest: false,
       },
-
-      // getLineColor,
-      getLineColor: [0, 255, 255, 200],
-      getLineWidth: 50,
+      getLineColor: lineStyling.lineColor,
+      getLineWidth: lineStyling.lineWidth,
 
       pickable: true,
-      // onHover: setHoverInfo,
-
+      onHover: handleHover,
       updateTriggers: {
         getLineColor: [255, 255, 0, 200],
         // getLineWidth: {year}
@@ -56,8 +105,26 @@ function MyMapWithLayer() {
     longitude: viewport.longitude,
     zoom: 12,
     minZoom: 2,
-    maxZoom: 8
-  };
+    maxZoom: 8,
+  }
+
+  const renderPopup = ({ hoverInfo }) => {
+   
+    return (
+      <Popup
+        tipSize={5}
+        anchor="top"
+        longitude={viewport.longitude}
+        latitude={viewport.latitude}
+        closeOnClick={false}
+        onClose={setPopupInfo}
+      >
+        {" "}
+        Info
+        <PopupInfo info={"popupInfo"} />
+      </Popup>
+    )
+  }
 
   return (
     <DeckGL
@@ -65,9 +132,11 @@ function MyMapWithLayer() {
       pickingRadius={5}
       initialViewState={INITIAL_VIEW_STATE}
       controller={true}
-      getTooltip={({object}) => object && (object.properties.name || object.properties.station)} 
-      onClick={() => setPopupInfo('clicked')}
-    >
+      getTooltip={({ object }) =>
+        object && (object.properties.name || object.properties.station)
+      }
+      onClick={() => setPopupInfo("clicked")}
+      >
       <MapGL
         {...viewport}
         width="100vw"
@@ -75,23 +144,10 @@ function MyMapWithLayer() {
         mapStyle="mapbox://styles/mapbox/outdoors-v11"
         onViewportChange={setViewport}
         mapboxApiAccessToken={MAPBOX_TOKEN}
-      >
+        >
         <Pin onClick={setPopupInfo} />
+        {/* {popupInfo && renderPopup(hoverInfo)} */}
 
-        {popupInfo && (
-          <Popup
-            tipSize={5}
-            anchor="top"
-            longitude={viewport.longitude}
-            latitude={viewport.latitude}
-            closeOnClick={false}
-            onClose={setPopupInfo}
-          >
-            {" "}
-            Info
-            <PopupInfo info={"popupInfo"} />
-          </Popup>
-        )}
       </MapGL>
     </DeckGL>
   )
