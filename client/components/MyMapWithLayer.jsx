@@ -141,7 +141,6 @@ function MyMapWithLayer() {
         {popupInfo && renderPopup()}
         <Pin onClick={setPopupInfo} />
 
-
       <MapGL
         key="map"
         {...viewport}
