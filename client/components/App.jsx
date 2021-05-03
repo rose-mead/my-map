@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { getDocTrails } from '../apis/doc-trails'
+import { getDocTrailsByRegion } from '../apis/doc-trails'
 
 import MyMapWithLayer from './MyMapWithLayer'
 
@@ -13,7 +13,7 @@ const App = (props) => {
   useEffect(() => {
     props.dispatch(fetchTrails())
     props.dispatch(fetchFavourites())
-    getDocTrails()
+    getDocTrailsByRegion('NZ-WGN')
   })
 
   return (

@@ -2,8 +2,6 @@ const express = require('express')
 const request = require('superagent')
 const router = express.Router()
 
-const { getRegionCode } = require('./utils')
-
 const docRootUrl = "https://api.doc.govt.nz/v1/tracks"
 const apiKey = process.env.DOC_API_KEY
 
