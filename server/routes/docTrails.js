@@ -4,17 +4,29 @@ const router = express.Router()
 
 const { getRegionCode } = require('./utils')
 
-const docRootUrl = (regionCode) => {
-  return `https://api.doc.govt.nz/v1/tracks/region/${regionCode}?coordinates=nztm`
-}
+const docRootUrl = "https://api.doc.govt.nz/v1/tracks"
 const apiKey = process.env.DOC_API_KEY
 
 
 // get DOC walks by region id
 router.get('/region/:regionCode', (req, res) => {
   const {regionCode} = req.params
+  const url = `${docRootUrl}/region/${regionCode}?coordinates=nztm`
+  console.log(url)
+  return request.get(url)
+    .set('x-api-key', apiKey)
+    .then(response => {
+        res.json(response.body)
+    })
+    .catch(err => console.log('error in routes'))
+})
 
-  return request.get(docRootUrl(regionCode))
+// get a specific DOC walk by track id
+router.get('/trail/:id', (req, res) => {
+  const {id} = req.params
+  const url = `${docRootUrl}/${id}/detail?coordinates=nztm`
+
+  return request.get(url)
     .set('x-api-key', apiKey)
     .then(response => {
         res.json(response.body)
