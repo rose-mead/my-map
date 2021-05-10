@@ -17,11 +17,6 @@ module.exports = {
       ignoreOrder: false // Enable to remove warnings about conflicting order
     }),
     new Dotenv(),
-    new webpack.EnvironmentPlugin({
-      NODE_ENV: 'development', // use 'development' unless process.env.NODE_ENV is defined
-      DEBUG: false,
-      MAPBOX_TOKEN: process.env.MAPBOX_TOKEN
-    })
   ],
   module: {
     rules: [
