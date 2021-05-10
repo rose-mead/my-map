@@ -12,6 +12,7 @@ import data from "./data.json"
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
 function MyMapWithLayer() {
+  
   const [popupInfo, setPopupInfo] = useState(null)
   const [viewport, setViewport] = useState({
     latitude: -41.146366,
