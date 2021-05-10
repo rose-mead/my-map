@@ -2,6 +2,7 @@ const path = require('path')
 const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 
 const Dotenv = require('dotenv-webpack')
+const { EnvironmentPlugin } = require('webpack')
 
 module.exports = {
   entry: ['./client/index.js', './client/styles/index.scss'],
@@ -17,6 +18,7 @@ module.exports = {
       ignoreOrder: false // Enable to remove warnings about conflicting order
     }),
     new Dotenv(),
+    new EnvironmentPlugin(['MAPBOX_TOKEN'])
   ],
   module: {
     rules: [
