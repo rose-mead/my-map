@@ -8,6 +8,7 @@ import DeckGL from "@deck.gl/react"
 import { GeoJsonLayer } from "@deck.gl/layers"
 
 import data from "./data.json"
+import Drawer from "./Drawer"
 
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
@@ -21,6 +22,11 @@ function MyMapWithLayer() {
     bearing: 0,
     pitch: 0,
   })
+
+  const info = {
+    name: 'My trail',
+    length: '10km'
+  }
 
   const [lineStyling, setLineStyling] = useState({
     lineColor: [0, 255, 255, 200],
@@ -137,10 +143,12 @@ function MyMapWithLayer() {
       getTooltip={({ object }) =>
         object && (object.properties.name || object.properties.station)
       }
-      onClick={() => setPopupInfo(true)}
+      // onClick={() => popupInfo && setPopupInfo(false)}
       >
         {popupInfo && renderPopup()}
-        <Pin onClick={setPopupInfo} />
+        {popupInfo && <Drawer info={info} onClose={setPopupInfo}/>}
+
+        <Pin onClick={() => setPopupInfo(true)} />
 
       <MapGL
         key="map"
