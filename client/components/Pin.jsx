@@ -7,17 +7,17 @@ const ICON = `M20.2,15.7L20.2,15.7c1.1-1.6,1.8-3.6,1.8-5.7c0-5.6-4.5-10-10-10S2,
   C20.1,15.8,20.2,15.8,20.2,15.7z`;
 const SIZE = 20;
 
-const location = {
-    latitude: -41.146366,
-    longitude: 174.818397
-}
+// const location = {
+//     latitude: -41.146366,
+//     longitude: 174.818397
+// }
 
 
-function Pin ({onClick}) {
+function Pin ({handleClick, pinInfo}) {
     return (
     <Marker
-        latitude={location.latitude}
-        longitude={location.longitude}
+        latitude={pinInfo.lat}
+        longitude={pinInfo.lon}
         // offsetLeft={-20}
         // offsetTop={-10}
       >
@@ -30,7 +30,7 @@ function Pin ({onClick}) {
           stroke: 'none',
           transform: `translate(${-SIZE / 2}px,${-SIZE}px)`
         }}
-        onClick={() => onClick(location)}
+        onClick={() => handleClick(location)}
       >
         <path d={ICON} />
       </svg>

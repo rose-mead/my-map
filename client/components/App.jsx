@@ -1,19 +1,18 @@
 import React, { useEffect } from "react"
 import { connect } from "react-redux"
-import { getDocTrailsByRegion } from "../apis/doc-trails"
 
 import MyMapWithLayer from "./MyMapWithLayer"
 
-import { fetchFavourites, fetchTrails } from "../actions"
+import { fetchFavourites, fetchTrails, fetchDocTrails } from "../actions"
 import Favourites from "./Favourites"
 import Trails from "./Trails"
 import Topbar from "./Topbar"
 
 const App = (props) => {
   useEffect(() => {
-    props.dispatch(fetchTrails())
-    props.dispatch(fetchFavourites())
-    getDocTrailsByRegion("NZ-WGN")
+    // props.dispatch(fetchTrails())
+    props.dispatch(fetchDocTrails())
+    // props.dispatch(fetchFavourites())
   })
 
   return (

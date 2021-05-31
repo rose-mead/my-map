@@ -1,20 +1,25 @@
-import React from "react"
-import { useState } from "react"
+import React, { useState }  from "react"
+import {connect} from 'react-redux'
 import MapGL, { Popup, _MapContext as MapContext } from "react-map-gl"
-import Pin from "./Pin"
-import PopupInfo from "./PopupInfo"
-
 import DeckGL from "@deck.gl/react"
 import { GeoJsonLayer } from "@deck.gl/layers"
 
-import data from "./data.json"
+import Pin from "./Pin"
+import PopupInfo from "./PopupInfo"
 import Drawer from "./Drawer"
+import data from "./data.json"
+
 
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
-function MyMapWithLayer() {
+function MyMapWithLayer({docTrails}) {
+
+ 
   
   const [popupInfo, setPopupInfo] = useState(null)
+  const [hoverInfo, setHoverInfo] = useState(false)
+
+  // viewport is where we want the map to start on
   const [viewport, setViewport] = useState({
     latitude: -41.146366,
     longitude: 174.818397,
@@ -23,25 +28,31 @@ function MyMapWithLayer() {
     pitch: 0,
   })
 
+  // whats the difference between viewport and INITIAL_VIEW_STATE?
+  const INITIAL_VIEW_STATE = {
+    latitude: viewport.latitude,
+    longitude: viewport.longitude,
+    zoom: 12,
+    minZoom: 2,
+    maxZoom: 8,
+  }
+
   const info = {
     name: 'My trail',
     length: '10km'
   }
 
+  // styling for the trail line
   const [lineStyling, setLineStyling] = useState({
     lineColor: [0, 255, 255, 200],
     lineWidth: 50
   })
 
-  // const [lineThickness, setLineThickness] = useState(50)
-  // const [lineColour, setLineColour] = useState([0, 255, 255, 200])
-  const [hoverInfo, setHoverInfo] = useState(false)
-
+  // change the line when you click on it
   const toggleLineStyle = (width) => {
     if(lineStyling.lineWidth == width) {
       return null
     } else if (lineStyling.lineWidth == 50){
-      console.log('setting width')
       setLineStyling({
         lineColor: [0, 0, 255, 200],
         lineWidth: 100
@@ -54,32 +65,21 @@ function MyMapWithLayer() {
       }
   }
 
-
   const handleHover = (evt) => {
     const { object } = evt
-
     // if exiting toggle, make linethickness 50
     // if entering hover, make linethickness 100
     // if during hover, don't change thickness
 
     if(!object) {
       toggleLineStyle(50)
-      console.log('exited hover')
     } else {
       toggleLineStyle(100)
     }
     setHoverInfo('info')
-    // if entering hover, thicken the line, else make it thin
-    // how to do this using only the onHover event handler
-    // if(!isHovering){
-    //   setIsHovering(true)
-    //   console.log('hovering')
-    //   // setLineThickness(100)
-    // } else {
-    //   return null
-    // }
   }
 
+  // create a deck layer for the trail lines
   const layers = [
     new GeoJsonLayer({
       id: "geojson",
@@ -107,16 +107,9 @@ function MyMapWithLayer() {
     }),
   ]
 
-  const INITIAL_VIEW_STATE = {
-    latitude: viewport.latitude,
-    longitude: viewport.longitude,
-    zoom: 12,
-    minZoom: 2,
-    maxZoom: 8,
-  }
-
+ 
+// popup html to show when pin has been clicked
   const renderPopup = () => {
-   
     return (
       <Popup
         tipSize={5}
@@ -133,7 +126,17 @@ function MyMapWithLayer() {
     )
   }
 
+  const renderPins = () => {
+
+    return new Array(6).fill(0).map((e, i) =>{
+
+      return <Pin handleClick={() => setPopupInfo(true)} pinInfo={docTrails[i]}/>
+    })
+    
+  }
+
   return (
+    // deckGL map layer, allows to use layers
     <DeckGL 
       ContextProvider={MapContext.Provider}
       layers={layers}
@@ -143,13 +146,15 @@ function MyMapWithLayer() {
       getTooltip={({ object }) =>
         object && (object.properties.name || object.properties.station)
       }
-      // onClick={() => popupInfo && setPopupInfo(false)}
       >
         {popupInfo && renderPopup()}
         {popupInfo && <Drawer info={info} onClose={setPopupInfo}/>}
 
-        <Pin onClick={() => setPopupInfo(true)} />
 
+        {/* put pins in all the spots */}
+       {docTrails[0] && renderPins()}
+
+      {/* Mapgl - just the regular map */}
       <MapGL
         key="map"
         {...viewport}
@@ -165,4 +170,10 @@ function MyMapWithLayer() {
   )
 }
 
-export default MyMapWithLayer
+function mapStateToProps(globalState) {
+  return {
+    docTrails: globalState.docTrails
+  }
+}
+
+export default connect(mapStateToProps)(MyMapWithLayer)

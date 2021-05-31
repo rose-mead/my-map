@@ -1,7 +1,9 @@
 import { getTrails } from '../apis/trails'
+import { getDocTrailsByRegion } from '../apis/DocTrails'
 import { getFavourites } from '../apis/favourites'
 
 export const SET_TRAILS = 'SET_TRAILS'
+export const SET_DOC_TRAILS = 'SET_DOC_TRAILS'
 export const SET_FAVOURITES = 'SET_FAVOURITES'
 
 export function setTrails (trails) {
@@ -33,6 +35,25 @@ export function fetchFavourites () {
     return getFavourites()
       .then(favourites => {
         dispatch(setFavourites(favourites))
+        return null
+      })
+  }
+}
+
+
+export function setDocTrails (trails) {
+  return {
+    type: SET_DOC_TRAILS,
+    trails
+  }
+}
+
+
+export function fetchDocTrails () {
+  return dispatch => {
+    return getDocTrailsByRegion('NZ-WGN')
+      .then(trails => {
+        dispatch(setDocTrails(trails))
         return null
       })
   }

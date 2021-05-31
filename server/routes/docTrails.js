@@ -5,11 +5,10 @@ const router = express.Router()
 const docRootUrl = "https://api.doc.govt.nz/v1/tracks"
 const apiKey = process.env.DOC_API_KEY
 
-
 // get DOC walks by region id
 router.get('/region/:regionCode', (req, res) => {
   const {regionCode} = req.params
-  const url = `${docRootUrl}/region/${regionCode}?coordinates=nztm`
+  const url = `${docRootUrl}/region/${regionCode}?coordinates=wgs84`
   console.log(url)
   return request.get(url)
     .set('x-api-key', apiKey)
