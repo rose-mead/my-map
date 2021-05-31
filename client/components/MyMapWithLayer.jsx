@@ -9,10 +9,14 @@ import PopupInfo from "./PopupInfo"
 import Drawer from "./Drawer"
 import data from "./data.json"
 
+// use this data for now - replace with api and gs
+import docTrails from "./docData.json"
+
+
 
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
-function MyMapWithLayer({docTrails}) {
+function MyMapWithLayer() {
 
  
   
@@ -35,11 +39,6 @@ function MyMapWithLayer({docTrails}) {
     zoom: 12,
     minZoom: 2,
     maxZoom: 8,
-  }
-
-  const info = {
-    name: 'My trail',
-    length: '10km'
   }
 
   // styling for the trail line
@@ -116,8 +115,9 @@ function MyMapWithLayer({docTrails}) {
         anchor="top"
         longitude={viewport.longitude}
         latitude={viewport.latitude}
-        closeOnClick={false}
-        onClose={setPopupInfo}
+        closeOnClick={true}
+        // onClose={()=>setPopupInfo(false)}
+        // offset={{top:[0,0]}}
       >
         {" "}
         Info
@@ -129,7 +129,6 @@ function MyMapWithLayer({docTrails}) {
   const renderPins = () => {
 
     return new Array(6).fill(0).map((e, i) =>{
-
       return <Pin handleClick={() => setPopupInfo(docTrails[i])} pinInfo={docTrails[i]}/>
     })
     
@@ -142,13 +141,13 @@ function MyMapWithLayer({docTrails}) {
       layers={layers}
       pickingRadius={5}
       initialViewState={INITIAL_VIEW_STATE}
-      controller={true}
+      controller={true} 
       getTooltip={({ object }) =>
         object && (object.properties.name || object.properties.station)
       }
       >
-        {popupInfo && renderPopup()}
-        {popupInfo && <Drawer info={info} onClose={setPopupInfo}/>}
+        {/* {popupInfo && renderPopup()} */}
+        {popupInfo && <Drawer info={popupInfo} onClose={()=>setPopupInfo(false)}/>}
 
 
         {/* put pins in all the spots */}

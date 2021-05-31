@@ -8,7 +8,7 @@ import { connect } from 'react-redux'
 import DeckGL from "@deck.gl/react"
 import { GeoJsonLayer } from "@deck.gl/layers"
 
-import data from "./data.json"
+import data from "./docData.json"
 import { formatDocTrailAsJson } from './utils'
 
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN

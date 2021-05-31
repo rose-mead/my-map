@@ -47,13 +47,30 @@ contain: content;
 }
 
 .drawer {
-  height: 100px;
+  height: 40%;
   width: 100%;
   border-radius: 20px 20px 0 0;
-  position: fixed;
+  position: absolute;
   bottom: 0;
   background: #ECF0F3;
   border: 2px solid #000000;
+  font-size: 0.8rem;
+  z-index: 2;
+}
+
+.drawer-content {
+  margin: 10px;
+}
+
+td:nth-child(2) {
+  font-weight: 600;
+  padding-left: 5px;
+}
+
+.close {
+  position: absolute;
+  right: 5px;
+  top: 5px;
 }
 
 
