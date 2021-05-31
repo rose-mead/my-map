@@ -121,7 +121,7 @@ function MyMapWithLayer({docTrails}) {
       >
         {" "}
         Info
-        <PopupInfo info={"popupInfo"} />
+        <PopupInfo info={popupInfo} />
       </Popup>
     )
   }
@@ -130,7 +130,7 @@ function MyMapWithLayer({docTrails}) {
 
     return new Array(6).fill(0).map((e, i) =>{
 
-      return <Pin handleClick={() => setPopupInfo(true)} pinInfo={docTrails[i]}/>
+      return <Pin handleClick={() => setPopupInfo(docTrails[i])} pinInfo={docTrails[i]}/>
     })
     
   }

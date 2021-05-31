@@ -1,18 +1,16 @@
 import React from 'react';
 
 function PopupInfo (props) {
-//   const {info} = props;
-//   const displayName = `${info.city}, ${info.state}`;
+  const {info} = props;
 
   return (
     <div>
       <div>
-        {'displayName'} |{' '}
         <a
           target="_new"
-          href={`http://en.wikipedia.org/w/index.php?title=Special:Search&search=${'displayName'}`}
         >
-          Wikipedia
+          {info.name}
+          {info.region[0]}
         </a>
       </div>
       <img width={240} src={'info.image'} />
