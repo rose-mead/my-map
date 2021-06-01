@@ -43,6 +43,7 @@
     ]
   },
   "dependencies": {
+    "d3-ease": "^2.0.0",
     "deck.gl": "^8.4.13",
     "dotenv": "^8.2.0",
     "dotenv-webpack": "^7.0.2",

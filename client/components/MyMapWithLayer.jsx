@@ -1,6 +1,6 @@
 import React, { useState }  from "react"
 import {connect} from 'react-redux'
-import MapGL, { Popup, _MapContext as MapContext } from "react-map-gl"
+import MapGL, { Popup, _MapContext as MapContext, } from "react-map-gl"
 import DeckGL from "@deck.gl/react"
 import { GeoJsonLayer } from "@deck.gl/layers"
 
@@ -44,6 +44,14 @@ function MyMapWithLayer() {
     lineColor: [0, 255, 255, 200],
     lineWidth: 50
   })
+
+  const centerViewPortToPin = (pinData) => {
+    setViewport({
+      ...viewport,
+      latitude: pinData.lat,
+      longitude: pinData.lon,
+    })
+  }
 
   // change the line when you click on it
   const toggleLineStyle = (width) => {
@@ -137,7 +145,11 @@ function MyMapWithLayer() {
 
   const renderPins = () => {
     return new Array(6).fill(0).map((e, i) =>{
-      return <Pin handleClick={() => setPopupInfo(docTrails[i])} pinInfo={docTrails[i]}/>
+      return <Pin handleClick={() => {
+        setPopupInfo(docTrails[i])
+        centerViewPortToPin(docTrails[i])
+      }
+    } pinInfo={docTrails[i]}/>
     })
   }
 
