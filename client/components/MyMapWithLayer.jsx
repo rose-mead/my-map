@@ -106,6 +106,11 @@ function MyMapWithLayer() {
     }),
   ]
 
+  const handleMapClick = () => {
+    console.log('clicked map')
+    setPopupInfo(false)
+  }
+
  
 // popup html to show when pin has been clicked
   const renderPopup = () => {
@@ -162,6 +167,7 @@ function MyMapWithLayer() {
         mapStyle="mapbox://styles/mapbox/outdoors-v11"
         onViewportChange={setViewport}
         mapboxApiAccessToken={MAPBOX_TOKEN}
+        onClick={handleMapClick}
         >
 
       </MapGL>
