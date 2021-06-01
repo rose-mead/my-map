@@ -104,9 +104,15 @@ function MyMapWithLayer() {
     }),
   ]
 
-  const handleMapClick = () => {
-    setPopupInfo(false)
+  const handleMapClick = (evt) => {
+    // when click on the map (and not the marker), close the popup
+    // setPopupInfo(false)
+    console.log(evt)
+    console.log('clicked')
   }
+
+
+ 
 
  
 // popup html to show when pin has been clicked
@@ -128,12 +134,15 @@ function MyMapWithLayer() {
     )
   }
 
-  const renderPins = () => {
 
+  const renderPins = () => {
     return new Array(6).fill(0).map((e, i) =>{
       return <Pin handleClick={() => setPopupInfo(docTrails[i])} pinInfo={docTrails[i]}/>
     })
-    
+  }
+
+  const renderOnePin = () => {
+    return <Pin handleClick={() => setPopupInfo(popupInfo)} pinInfo={popupInfo}/>
   }
 
   return (
@@ -147,14 +156,15 @@ function MyMapWithLayer() {
       getTooltip={({ object }) =>
         object && (object.properties.name || object.properties.station)
       }
-      onClick={handleMapClick}
+      // onClick={handleMapClick}
       >
         {/* {popupInfo && renderPopup()} */}
         {popupInfo && <Drawer info={popupInfo} onClose={()=>setPopupInfo(false)}/>}
 
 
         {/* put pins in all the spots */}
-       {docTrails[0] && renderPins()}
+        {/* if data is there and no popupInfo, render pins, else just render one pin */}
+       {!popupInfo ? renderPins() : renderOnePin() }
 
       {/* Mapgl - just the regular map */}
       <MapGL
