@@ -18,8 +18,6 @@ const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
 function MyMapWithLayer() {
 
- 
-  
   const [popupInfo, setPopupInfo] = useState(null)
   const [hoverInfo, setHoverInfo] = useState(false)
 
@@ -107,7 +105,6 @@ function MyMapWithLayer() {
   ]
 
   const handleMapClick = () => {
-    console.log('clicked map')
     setPopupInfo(false)
   }
 
@@ -150,6 +147,7 @@ function MyMapWithLayer() {
       getTooltip={({ object }) =>
         object && (object.properties.name || object.properties.station)
       }
+      onClick={handleMapClick}
       >
         {/* {popupInfo && renderPopup()} */}
         {popupInfo && <Drawer info={popupInfo} onClose={()=>setPopupInfo(false)}/>}
@@ -167,7 +165,6 @@ function MyMapWithLayer() {
         mapStyle="mapbox://styles/mapbox/outdoors-v11"
         onViewportChange={setViewport}
         mapboxApiAccessToken={MAPBOX_TOKEN}
-        onClick={handleMapClick}
         >
 
       </MapGL>
