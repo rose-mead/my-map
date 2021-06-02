@@ -9,17 +9,15 @@ import PopupInfo from "./PopupInfo"
 import Drawer from "./Drawer"
 import data from "./data2.json"
 
-// use this data for now - replace with api and gs
-import docTrails from "./docData.json"
-import {formatDocTrailAsJson} from './utils'
+
+
+import Pins from "./Pins"
 
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
 function MyMapWithLayer() {
-  const transformedData = formatDocTrailAsJson(docTrails[0])
 
   const [popupInfo, setPopupInfo] = useState(null)
-  const [hoverInfo, setHoverInfo] = useState(false)
 
   // viewport is where we want the map to start on
   const [viewport, setViewport] = useState({
@@ -89,7 +87,7 @@ function MyMapWithLayer() {
     new GeoJsonLayer({
       id: "geojson",
       data: popupInfo,
-      
+
       stroked: false,
       filled: false,
       lineWidthMinPixels: 0.5,
@@ -113,12 +111,6 @@ function MyMapWithLayer() {
     }),
   ]
 
-  const handleMapClick = (evt) => {
-    // when click on the map (and not the marker), close the popup
-    // setPopupInfo(false)
-    console.log(evt)
-    console.log("clicked")
-  }
 
   // popup html to show when pin has been clicked
   const renderPopup = () => {
@@ -139,20 +131,20 @@ function MyMapWithLayer() {
     )
   }
 
-  const renderPins = () => {
-    return new Array(6).fill(0).map((e, i) => {
-      const trackData = formatDocTrailAsJson(docTrails[i])
-      return (
-        <Pin
-          handleClick={() => {
-            setPopupInfo(trackData)
-            centerViewPortToPin(trackData)
-          }}
-          pinInfo={trackData}
-        />
-      )
-    })
-  }
+  // const renderPins = () => {
+  //   return new Array(6).fill(0).map((e, i) => {
+  //     const trackData = formatDocTrailAsJson(docTrails[i])
+  //     return (
+  //       <Pin
+  //         handleClick={() => {
+  //           setPopupInfo(trackData)
+  //           centerViewPortToPin(trackData)
+  //         }}
+  //         pinInfo={trackData}
+  //       />
+  //     )
+  //   })
+  // }
 
   const renderOnePin = () => {
     return (
@@ -180,7 +172,7 @@ function MyMapWithLayer() {
 
       {/* put pins in all the spots */}
       {/* if data is there and no popupInfo, render pins, else just render one pin */}
-      {!popupInfo ? renderPins() : renderOnePin()}
+      {!popupInfo ? <Pins setPopupInfo={setPopupInfo} centerViewPortToPin={centerViewPortToPin}/> : renderOnePin()}
 
       {/* Mapgl - just the regular map */}
       <MapGL
