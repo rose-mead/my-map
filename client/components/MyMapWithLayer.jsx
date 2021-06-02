@@ -3,10 +3,10 @@ import { connect } from "react-redux"
 import MapGL, { _MapContext as MapContext } from "react-map-gl"
 import DeckGL from "@deck.gl/react"
 import { GeoJsonLayer } from "@deck.gl/layers"
+import {toggleLineStyle} from './utils'
 
 import Pin from "./Pin"
 import Drawer from "./Drawer"
-import data from "./data2.json"
 
 import Pins from "./Pins"
 
@@ -16,7 +16,7 @@ function MyMapWithLayer() {
 
   const [popupInfo, setPopupInfo] = useState(null)
 
-  // viewport is where we want the map to start on
+  // viewport is where we want the map to be centered on
   const [viewport, setViewport] = useState({
     latitude: -41.146366,
     longitude: 174.818397,
@@ -48,33 +48,16 @@ function MyMapWithLayer() {
     })
   }
 
-  // change the line when you click on it
-  const toggleLineStyle = (width) => {
-    if (lineStyling.lineWidth == width) {
-      return null
-    } else if (lineStyling.lineWidth == 50) {
-      setLineStyling({
-        lineColor: [0, 0, 255, 200],
-        lineWidth: 100,
-      })
-    } else {
-      setLineStyling({
-        lineColor: [0, 255, 255, 200],
-        lineWidth: 50,
-      })
-    }
-  }
-
-  const handleHover = (evt) => {
+  const handleLineHover = (evt) => {
     const { object } = evt
     // if exiting toggle, make linethickness 50
     // if entering hover, make linethickness 100
     // if during hover, don't change thickness
 
     if (!object) {
-      toggleLineStyle(50)
+      setLineStyling(toggleLineStyle(50))
     } else {
-      toggleLineStyle(100)
+      setLineStyling(toggleLineStyle(100))
     }
     setHoverInfo("info")
   }
@@ -95,7 +78,7 @@ function MyMapWithLayer() {
       getLineWidth: lineStyling.lineWidth,
 
       pickable: true,
-      onHover: handleHover,
+      onHover: handleLineHover,
       updateTriggers: {
         getLineColor: [255, 255, 0, 200],
         // getLineWidth: {year}
@@ -107,31 +90,6 @@ function MyMapWithLayer() {
       },
     }),
   ]
-
-
-  // popup html to show when pin has been clicked
- 
-
-  // const renderPins = () => {
-  //   return new Array(6).fill(0).map((e, i) => {
-  //     const trackData = formatDocTrailAsJson(docTrails[i])
-  //     return (
-  //       <Pin
-  //         handleClick={() => {
-  //           setPopupInfo(trackData)
-  //           centerViewPortToPin(trackData)
-  //         }}
-  //         pinInfo={trackData}
-  //       />
-  //     )
-  //   })
-  // }
-
-  const renderOnePin = () => {
-    return (
-      <Pin handleClick={() => setPopupInfo(popupInfo)} pinInfo={popupInfo} />
-    )
-  }
 
   return (
     // deckGL map layer, allows to use layers
@@ -153,7 +111,7 @@ function MyMapWithLayer() {
 
       {/* put pins in all the spots */}
       {/* if data is there and no popupInfo, render pins, else just render one pin */}
-      {!popupInfo ? <Pins setPopupInfo={setPopupInfo} centerViewPortToPin={centerViewPortToPin}/> : renderOnePin()}
+      {!popupInfo ? <Pins setPopupInfo={setPopupInfo} centerViewPortToPin={centerViewPortToPin}/> : <Pin handleClick={() => setPopupInfo(popupInfo)} pinInfo={popupInfo} />}
 
       {/* Mapgl - just the regular map */}
       <MapGL
