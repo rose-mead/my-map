@@ -16,6 +16,9 @@ export function formatDocTrailAsJson(docData) {
 
 export function toggleLineStyle(width) {
   // change the line when you click on it
+   // if exiting toggle, make linethickness 50
+    // if entering hover, make linethickness 100
+    // if during hover, don't change thickness
     if (lineStyling.lineWidth == width) {
       return null
     } else if (lineStyling.lineWidth == 50) {

@@ -9,8 +9,8 @@ import Pin from "./Pin"
 import Drawer from "./Drawer"
 
 import Pins from "./Pins"
+import GLMap from "./GLMap"
 
-const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
 function MyMapWithLayer() {
 
@@ -50,10 +50,7 @@ function MyMapWithLayer() {
 
   const handleLineHover = (evt) => {
     const { object } = evt
-    // if exiting toggle, make linethickness 50
-    // if entering hover, make linethickness 100
-    // if during hover, don't change thickness
-
+   
     if (!object) {
       setLineStyling(toggleLineStyle(50))
     } else {
@@ -102,7 +99,6 @@ function MyMapWithLayer() {
       getTooltip={({ object }) =>
         object && (object.properties.name || object.properties.station)
       }
-      // onClick={handleMapClick}
     >
       {/* {popupInfo && renderPopup()} */}
       {popupInfo && (
@@ -114,15 +110,7 @@ function MyMapWithLayer() {
       {!popupInfo ? <Pins setPopupInfo={setPopupInfo} centerViewPortToPin={centerViewPortToPin}/> : <Pin handleClick={() => setPopupInfo(popupInfo)} pinInfo={popupInfo} />}
 
       {/* Mapgl - just the regular map */}
-      <MapGL
-        key="map"
-        {...viewport}
-        width="100vw"
-        height="100vh"
-        mapStyle="mapbox://styles/mapbox/outdoors-v11"
-        onViewportChange={setViewport}
-        mapboxApiAccessToken={MAPBOX_TOKEN}
-      ></MapGL>
+      <GLMap viewport={viewport} setViewport={setViewport}/>
     </DeckGL>
   )
 }
