@@ -1,15 +1,12 @@
 import React, { useState } from "react"
 import { connect } from "react-redux"
-import MapGL, { Popup, _MapContext as MapContext } from "react-map-gl"
+import MapGL, { _MapContext as MapContext } from "react-map-gl"
 import DeckGL from "@deck.gl/react"
 import { GeoJsonLayer } from "@deck.gl/layers"
 
 import Pin from "./Pin"
-import PopupInfo from "./PopupInfo"
 import Drawer from "./Drawer"
 import data from "./data2.json"
-
-
 
 import Pins from "./Pins"
 
@@ -113,23 +110,7 @@ function MyMapWithLayer() {
 
 
   // popup html to show when pin has been clicked
-  const renderPopup = () => {
-    return (
-      <Popup
-        tipSize={5}
-        anchor="top"
-        longitude={viewport.longitude}
-        latitude={viewport.latitude}
-        closeOnClick={true}
-        // onClose={()=>setPopupInfo(false)}
-        // offset={{top:[0,0]}}
-      >
-        {" "}
-        Info
-        <PopupInfo info={popupInfo} />
-      </Popup>
-    )
-  }
+ 
 
   // const renderPins = () => {
   //   return new Array(6).fill(0).map((e, i) => {
