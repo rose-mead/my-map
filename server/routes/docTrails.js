@@ -21,7 +21,7 @@ router.get('/region/:regionCode', (req, res) => {
 // get a specific DOC walk by track id
 router.get('/trail/:id', (req, res) => {
   const {id} = req.params
-  const url = `${docRootUrl}/${id}/detail?coordinates=nztm`
+  const url = `${docRootUrl}/${id}/detail?coordinates=wgs84`
 
   return request.get(url)
     .set('x-api-key', apiKey)

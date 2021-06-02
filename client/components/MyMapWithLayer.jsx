@@ -1,22 +1,22 @@
-import React, { useState }  from "react"
-import {connect} from 'react-redux'
-import MapGL, { Popup, _MapContext as MapContext, } from "react-map-gl"
+import React, { useState } from "react"
+import { connect } from "react-redux"
+import MapGL, { Popup, _MapContext as MapContext } from "react-map-gl"
 import DeckGL from "@deck.gl/react"
 import { GeoJsonLayer } from "@deck.gl/layers"
 
 import Pin from "./Pin"
 import PopupInfo from "./PopupInfo"
 import Drawer from "./Drawer"
-import data from "./data.json"
+import data from "./data2.json"
 
 // use this data for now - replace with api and gs
 import docTrails from "./docData.json"
-
-
+import {formatDocTrailAsJson} from './utils'
 
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
 function MyMapWithLayer() {
+  const transformedData = formatDocTrailAsJson(docTrails[0])
 
   const [popupInfo, setPopupInfo] = useState(null)
   const [hoverInfo, setHoverInfo] = useState(false)
@@ -42,7 +42,7 @@ function MyMapWithLayer() {
   // styling for the trail line
   const [lineStyling, setLineStyling] = useState({
     lineColor: [0, 255, 255, 200],
-    lineWidth: 50
+    lineWidth: 50,
   })
 
   const centerViewPortToPin = (pinData) => {
@@ -55,19 +55,19 @@ function MyMapWithLayer() {
 
   // change the line when you click on it
   const toggleLineStyle = (width) => {
-    if(lineStyling.lineWidth == width) {
+    if (lineStyling.lineWidth == width) {
       return null
-    } else if (lineStyling.lineWidth == 50){
+    } else if (lineStyling.lineWidth == 50) {
       setLineStyling({
         lineColor: [0, 0, 255, 200],
-        lineWidth: 100
+        lineWidth: 100,
       })
     } else {
-        setLineStyling({
-          lineColor: [0, 255, 255, 200],
-          lineWidth: 50
-        })
-      }
+      setLineStyling({
+        lineColor: [0, 255, 255, 200],
+        lineWidth: 50,
+      })
+    }
   }
 
   const handleHover = (evt) => {
@@ -76,19 +76,20 @@ function MyMapWithLayer() {
     // if entering hover, make linethickness 100
     // if during hover, don't change thickness
 
-    if(!object) {
+    if (!object) {
       toggleLineStyle(50)
     } else {
       toggleLineStyle(100)
     }
-    setHoverInfo('info')
+    setHoverInfo("info")
   }
 
   // create a deck layer for the trail lines
   const layers = [
     new GeoJsonLayer({
       id: "geojson",
-      data: data,
+      data: popupInfo,
+      
       stroked: false,
       filled: false,
       lineWidthMinPixels: 0.5,
@@ -116,14 +117,10 @@ function MyMapWithLayer() {
     // when click on the map (and not the marker), close the popup
     // setPopupInfo(false)
     console.log(evt)
-    console.log('clicked')
+    console.log("clicked")
   }
 
-
- 
-
- 
-// popup html to show when pin has been clicked
+  // popup html to show when pin has been clicked
   const renderPopup = () => {
     return (
       <Popup
@@ -142,41 +139,48 @@ function MyMapWithLayer() {
     )
   }
 
-
   const renderPins = () => {
-    return new Array(6).fill(0).map((e, i) =>{
-      return <Pin handleClick={() => {
-        setPopupInfo(docTrails[i])
-        centerViewPortToPin(docTrails[i])
-      }
-    } pinInfo={docTrails[i]}/>
+    return new Array(6).fill(0).map((e, i) => {
+      const trackData = formatDocTrailAsJson(docTrails[i])
+      return (
+        <Pin
+          handleClick={() => {
+            setPopupInfo(trackData)
+            centerViewPortToPin(trackData)
+          }}
+          pinInfo={trackData}
+        />
+      )
     })
   }
 
   const renderOnePin = () => {
-    return <Pin handleClick={() => setPopupInfo(popupInfo)} pinInfo={popupInfo}/>
+    return (
+      <Pin handleClick={() => setPopupInfo(popupInfo)} pinInfo={popupInfo} />
+    )
   }
 
   return (
     // deckGL map layer, allows to use layers
-    <DeckGL 
+    <DeckGL
       ContextProvider={MapContext.Provider}
       layers={layers}
       pickingRadius={5}
       initialViewState={INITIAL_VIEW_STATE}
-      controller={true} 
+      controller={true}
       getTooltip={({ object }) =>
         object && (object.properties.name || object.properties.station)
       }
       // onClick={handleMapClick}
-      >
-        {/* {popupInfo && renderPopup()} */}
-        {popupInfo && <Drawer info={popupInfo} onClose={()=>setPopupInfo(false)}/>}
+    >
+      {/* {popupInfo && renderPopup()} */}
+      {popupInfo && (
+        <Drawer info={popupInfo} onClose={() => setPopupInfo(false)} />
+      )}
 
-
-        {/* put pins in all the spots */}
-        {/* if data is there and no popupInfo, render pins, else just render one pin */}
-       {!popupInfo ? renderPins() : renderOnePin() }
+      {/* put pins in all the spots */}
+      {/* if data is there and no popupInfo, render pins, else just render one pin */}
+      {!popupInfo ? renderPins() : renderOnePin()}
 
       {/* Mapgl - just the regular map */}
       <MapGL
@@ -187,16 +191,14 @@ function MyMapWithLayer() {
         mapStyle="mapbox://styles/mapbox/outdoors-v11"
         onViewportChange={setViewport}
         mapboxApiAccessToken={MAPBOX_TOKEN}
-        >
-
-      </MapGL>
+      ></MapGL>
     </DeckGL>
   )
 }
 
 function mapStateToProps(globalState) {
   return {
-    docTrails: globalState.docTrails
+    docTrails: globalState.docTrails,
   }
 }
 
