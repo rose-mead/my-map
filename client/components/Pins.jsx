@@ -7,7 +7,7 @@ import Pin from './Pin'
 function Pins ({setPopupInfo, centerViewPortToPin}) {
     return new Array(6).fill(0).map((e, i) => {
       const trackData = formatDocTrailAsJson(docTrails[i])
-      
+
       return (
         <Pin
           handleClick={() => {
@@ -15,6 +15,7 @@ function Pins ({setPopupInfo, centerViewPortToPin}) {
             centerViewPortToPin(trackData)
           }}
           pinInfo={trackData}
+          key={i}
         />
       )
     })

@@ -9,7 +9,8 @@ import Pin from "./Pin"
 import Drawer from "./Drawer"
 
 import Pins from "./Pins"
-import GLMap from "./GLMap"
+const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
+
 
 
 function MyMapWithLayer() {
@@ -24,6 +25,8 @@ function MyMapWithLayer() {
     bearing: 0,
     pitch: 0,
   })
+
+  
 
   // whats the difference between viewport and INITIAL_VIEW_STATE?
   const INITIAL_VIEW_STATE = {
@@ -110,7 +113,15 @@ function MyMapWithLayer() {
       {!popupInfo ? <Pins setPopupInfo={setPopupInfo} centerViewPortToPin={centerViewPortToPin}/> : <Pin handleClick={() => setPopupInfo(popupInfo)} pinInfo={popupInfo} />}
 
       {/* Mapgl - just the regular map */}
-      <GLMap viewport={viewport} setViewport={setViewport}/>
+      <MapGL
+      key="map"
+      {...viewport}
+      width="100vw"
+      height="100vh"
+      mapStyle="mapbox://styles/mapbox/outdoors-v11"
+      onViewportChange={setViewport}
+      mapboxApiAccessToken={MAPBOX_TOKEN}
+    ></MapGL>
     </DeckGL>
   )
 }
