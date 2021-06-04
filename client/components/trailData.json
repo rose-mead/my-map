@@ -1,0 +1,167 @@
+{
+    "assetId": "df2dbd3e-1599-4827-b3f8-d80ee2e983d4",
+    "name": "Big Bend Track",
+    "introduction": "The Big Bend Track follows the Orongorongo River and connects the Orongorongo Track with the Whakanui Track.",
+    "introductionThumbnail": "https://www.doc.govt.nz/thumbs/large/link/354b9b111fe44430904ff7de8e39ebad.jpg",
+    "permittedActivities": [
+      "Walking and tramping"
+    ],
+    "distance": null,
+    "walkDuration": "1 hr 30 min one way from Turere Bridge",
+    "walkDurationCategory": [
+      "1-4 hours",
+      "Over 4 hours"
+    ],
+    "walkTrackCategory": [
+      "Intermediate"
+    ],
+    "wheelchairsAndBuggies": null,
+    "mtbDuration": null,
+    "mtbDurationCategory": [],
+    "mtbTrackCategory": [],
+    "kayakingDuration": null,
+    "dogsAllowed": "Dogs on a leash only",
+    "locationString": "Located in Catchpool Valley & Ōrongorongo Valley, Remutaka Forest Park",
+    "locationArray": [
+      "Catchpool Valley & Ōrongorongo Valley",
+      "Remutaka Forest Park"
+    ],
+    "region": [
+      "Wellington/Kapiti"
+    ],
+    "staticLink": "https://www.doc.govt.nz/link/df2dbd3e15994827b3f8d80ee2e983d4.aspx",
+    "lon": 174.989888,
+    "lat": -41.333022,
+    "line": [
+      [
+        [
+          174.976554,
+          -41.340573
+        ],
+        [
+          174.97661,
+          -41.340411
+        ],
+        [
+          174.97742,
+          -41.34045
+        ],
+        [
+          174.97802,
+          -41.340186
+        ],
+        [
+          174.978757,
+          -41.339562
+        ],
+        [
+          174.979088,
+          -41.338885
+        ],
+        [
+          174.980481,
+          -41.338077
+        ],
+        [
+          174.979745,
+          -41.33696
+        ],
+        [
+          174.979851,
+          -41.336439
+        ],
+        [
+          174.980235,
+          -41.336188
+        ],
+        [
+          174.982975,
+          -41.335713
+        ],
+        [
+          174.98327,
+          -41.335617
+        ],
+        [
+          174.983463,
+          -41.335328
+        ],
+        [
+          174.984177,
+          -41.335265
+        ],
+        [
+          174.984257,
+          -41.334328
+        ],
+        [
+          174.984704,
+          -41.334045
+        ],
+        [
+          174.986282,
+          -41.333807
+        ],
+        [
+          174.988418,
+          -41.333075
+        ],
+        [
+          174.989888,
+          -41.333022
+        ],
+        [
+          174.990487,
+          -41.332766
+        ],
+        [
+          174.99101,
+          -41.332272
+        ],
+        [
+          174.992122,
+          -41.33234
+        ],
+        [
+          174.992554,
+          -41.332215
+        ],
+        [
+          174.992864,
+          -41.33155
+        ],
+        [
+          174.993847,
+          -41.330624
+        ],
+        [
+          174.9958,
+          -41.329462
+        ],
+        [
+          174.997133,
+          -41.329029
+        ],
+        [
+          175.000121,
+          -41.327306
+        ],
+        [
+          175.001537,
+          -41.326762
+        ],
+        [
+          175.002552,
+          -41.32657
+        ],
+        [
+          175.002821,
+          -41.326313
+        ],
+        [
+          175.003569,
+          -41.326257
+        ]
+      ]
+    ]
+  }
