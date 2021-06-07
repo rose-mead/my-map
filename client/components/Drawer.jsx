@@ -1,7 +1,7 @@
 import React from "react"
 
 function Drawer({info, onClose}) {
-    const {name, region, dogsAllowed, walkDuration, distance, walkTrackCategory} = info
+    const {name, region, dogsAllowed, walkDuration, distance, walkTrackCategory, staticLink} = info
 
   return (
     <div className="drawer">
@@ -42,6 +42,13 @@ function Drawer({info, onClose}) {
               </td>
               <td>Category:</td>
               <td>{walkTrackCategory}</td>
+            </tr>
+            <tr>
+              <td>
+                <span className="material-icons ">link</span>
+              </td>
+              <td><a href={staticLink}>Doc website link</a></td>
+              <td></td>
             </tr>
           </tbody>
         </table>

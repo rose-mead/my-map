@@ -3,7 +3,6 @@ import { connect } from "react-redux"
 import MapGL, { _MapContext as MapContext } from "react-map-gl"
 import DeckGL from "@deck.gl/react"
 import { GeoJsonLayer } from "@deck.gl/layers"
-import {toggleLineStyle} from './utils'
 
 import Pin from "./Pin"
 import Drawer from "./Drawer"
@@ -21,7 +20,7 @@ function MyMapWithLayer() {
   const [viewport, setViewport] = useState({
     latitude: -41.146366,
     longitude: 174.818397,
-    zoom: 14,
+    zoom: 12,
     bearing: 0,
     pitch: 0,
   })
@@ -48,8 +47,35 @@ function MyMapWithLayer() {
       ...viewport,
       latitude: pinData.lat,
       longitude: pinData.lon,
+      zoom: 14,
     })
+    // longitude: -74.1,
+    // latitude: 40.7,
+
+    // transitionInterpolator: new FlyToInterpolator(),
+    // transitionEasing: d3.easeCubic
   }
+
+   function toggleLineStyle(width) {
+    // change the line when you click on it
+     // if exiting toggle, make linethickness 50
+      // if entering hover, make linethickness 100
+      // if during hover, don't change thickness
+      if (lineStyling.lineWidth == width) {
+        return null
+      } else if (lineStyling.lineWidth == 50) {
+        return {
+          lineColor: [0, 0, 255, 200],
+          lineWidth: 100,
+        }
+      } else {
+        return{
+          lineColor: [0, 255, 255, 200],
+          lineWidth: 50,
+        }
+      }
+    }
+    
 
   const handleLineHover = (evt) => {
     const { object } = evt
@@ -59,7 +85,7 @@ function MyMapWithLayer() {
     } else {
       setLineStyling(toggleLineStyle(100))
     }
-    setHoverInfo("info")
+    // setHoverInfo("info")
   }
 
   // create a deck layer for the trail lines
