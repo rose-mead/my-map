@@ -11,7 +11,7 @@ import Topbar from "./Topbar"
 const App = (props) => {
   useEffect(() => {
     // props.dispatch(fetchTrails())
-    // props.dispatch(fetchDocTrails())
+    props.dispatch(fetchDocTrails())
     // props.dispatch(fetchFavourites())
   })
 

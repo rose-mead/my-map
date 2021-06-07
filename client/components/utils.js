@@ -7,7 +7,7 @@ export function formatDocTrailAsJson(docData) {
             type: "Feature",
             geometry: {
               type: "LineString",
-              coordinates: docData.line[0],
+              coordinates: docData.line[0] || null,
             },
           },
         ],
