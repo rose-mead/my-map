@@ -1,9 +1,8 @@
 import React from 'react'
 import {connect} from 'react-redux'
+
 import {getDocTrailById} from '../apis/docTrails'
-// use this data for now - replace with api and gs
-import docTrails from "./docData.json"
-import trailData from "./trailData.json"
+
 import Pin from './Pin'
 
 function Pins ({setPopupInfo, centerViewPortToPin, docTrails}) {

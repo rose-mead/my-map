@@ -12,7 +12,7 @@ const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
 
 
-function MyMapWithLayer() {
+function MyMap() {
 
   const [popupInfo, setPopupInfo] = useState(null)
 
@@ -158,4 +158,4 @@ function mapStateToProps(globalState) {
   }
 }
 
-export default connect(mapStateToProps)(MyMapWithLayer)
+export default connect(mapStateToProps)(MyMap)

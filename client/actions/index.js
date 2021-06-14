@@ -1,6 +1,7 @@
 import { getTrails } from '../apis/trails'
 import { getDocTrailsByRegion } from '../apis/DocTrails'
 import { getFavourites } from '../apis/favourites'
+import regions from '../components/regions.json'
 
 export const SET_TRAILS = 'SET_TRAILS'
 export const SET_DOC_TRAILS = 'SET_DOC_TRAILS'
@@ -49,12 +50,25 @@ export function setDocTrails (trails) {
 }
 
 
-export function fetchDocTrails () {
+export function fetchDocTrails (id) {
   return dispatch => {
-    return getDocTrailsByRegion('NZ-WGN')
-      .then(trails => {
-        dispatch(setDocTrails(trails))
-        return null
-      })
+    const regionCodeData = regions.find(region => {
+      return region.id === Number(id)
+    })
+
+    console.log(regionCodeData, id)
+
+    // return getDocTrailsByRegion(regionCodeData.codes[0])
+    //   .then(trails => {
+    //     dispatch(setDocTrails(trails))
+    //     return null
+    //   })
+
+    return Promise.all(regionCodeData.codes.map(code => {
+      return getDocTrailsByRegion(code)
+    }))
+    .then(trails => {
+      dispatch(setDocTrails(trails.flat()))
+    })
   }
 }

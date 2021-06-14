@@ -1,30 +1,18 @@
-import React, { useEffect } from "react"
-import { connect } from "react-redux"
+import React from "react"
 
-import MyMapWithLayer from "./MyMapWithLayer"
-
-import { fetchFavourites, fetchTrails, fetchDocTrails } from "../actions"
-import Favourites from "./Favourites"
-import Trails from "./Trails"
+import MyMap from "./MyMap"
 import Topbar from "./Topbar"
 
-const App = (props) => {
-  useEffect(() => {
-    // props.dispatch(fetchTrails())
-    props.dispatch(fetchDocTrails())
-    // props.dispatch(fetchFavourites())
-  })
+const App = () => {
 
   return (
     <>
       <div className="app">
         <Topbar />
-        {/* <Trails /> */}
-        {/* <Favourites /> */}
-          <MyMapWithLayer />
+        <MyMap />
       </div>
     </>
   )
 }
 
-export default connect()(App)
+export default App
