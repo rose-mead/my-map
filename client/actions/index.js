@@ -1,7 +1,7 @@
 import { getTrails } from '../apis/trails'
 import { getDocTrailsByRegion } from '../apis/DocTrails'
 import { getFavourites } from '../apis/favourites'
-import regions from '../components/regions.json'
+import regions from '../data/regions.json'
 
 export const SET_TRAILS = 'SET_TRAILS'
 export const SET_DOC_TRAILS = 'SET_DOC_TRAILS'

@@ -9,11 +9,12 @@ function Topbar(props) {
   const handleChange = (evt) => {
       // when a region is selected
       // go and get data for that region
-      // render all pins for that region
+      // render all pins for that region  
       // center viewport around that region
 
       // how to deal with regions with two region codes??
     props.dispatch(fetchDocTrails(evt.target.value))
+    props.centerViewPortToRegion()
   }
 
  const renderOptions = () => {

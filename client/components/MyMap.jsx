@@ -6,26 +6,26 @@ import { GeoJsonLayer } from "@deck.gl/layers"
 
 import Pin from "./Pin"
 import Drawer from "./Drawer"
-
 import Pins from "./Pins"
+
 const MAPBOX_TOKEN = process.env.MAPBOX_TOKEN
 
 
 
-function MyMap() {
+function MyMap({viewport, centerViewPortToPin, setViewport}) {
 
   const [popupInfo, setPopupInfo] = useState(null)
 
   // viewport is where we want the map to be centered on
-  const [viewport, setViewport] = useState({
-    latitude: -41.146366,
-    longitude: 174.818397,
-    zoom: 12,
-    bearing: 0,
-    pitch: 0,
-  })
+  // const [viewport, setViewport] = useState({
+  //   latitude: -41.146366,
+  //   longitude: 174.818397,
+  //   zoom: 12,
+  //   bearing: 0,
+  //   pitch: 0,
+  // })
 
-  
+ 
 
   // whats the difference between viewport and INITIAL_VIEW_STATE?
   const INITIAL_VIEW_STATE = {
@@ -42,19 +42,7 @@ function MyMap() {
     lineWidth: 50,
   })
 
-  const centerViewPortToPin = (pinData) => {
-    setViewport({
-      ...viewport,
-      latitude: pinData.lat,
-      longitude: pinData.lon,
-      zoom: 14,
-    })
-    // longitude: -74.1,
-    // latitude: 40.7,
-
-    // transitionInterpolator: new FlyToInterpolator(),
-    // transitionEasing: d3.easeCubic
-  }
+  
 
    function toggleLineStyle(width) {
     // change the line when you click on it
